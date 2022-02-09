@@ -22,6 +22,9 @@
     <script src="ProjGO.js"></script>
     <script src="ProjUpdate.js"></script>
     <script src="ProjDraw.js"></script>
+    <script src="EnemyGO.js"></script>
+    <script src="EnemyUpdate.js"></script>
+    <script src="EnemyDraw.js"></script>
 
     <script>
         "use strict"
@@ -40,21 +43,15 @@
         // let maxWidth = 400;
 
         //Define the model
-    //   for (let i = 0; i < max; i++) {
+    //   for (let i = 0; i < maxEnemys; i++) {
             
-    //         let percent = i / max;
-    //         let offset = maxWidth * percent;
-    //         let h = (1 - (i / max)) * height
-
-    //         let x = startX + offset;
-    //         let y = startY - 50 - h / 2;
-    //         let w = width + i * 10;
-
+    //         let x = getRandomInt(5, window.innerWidth - (enemyW + 5));
+    //         let y = enemyY;
     //         let r = 255;
-    //         let g = percent * 255;
+    //         let g = 255;
     //         let b = 0;
 
-    //         gameObjects.push(new RectangleGameObject(x, y, w, h, r, g, b, percent))
+        enemys.push(new EnemyGO(5, 0, enemyW, enemyH, 255, 255, 0));
     //     }
 
         function tick() {
@@ -71,6 +68,9 @@
             for (let proj of projectiles) {
                 proj.update();
             }
+            for (let enemy of enemys) {
+                enemy.update();
+            }
         }
 
         function draw() {
@@ -83,6 +83,9 @@
             player.draw();
             for (let proj of projectiles) {
                 proj.draw();
+            }
+            for (let enemy of enemys) {
+                enemy.draw();
             }
         }
 
