@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>My first html</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="canv"></canvas>
+    <script src="scripts.js"></script>
+    <script src="time.js"></script>
+    <script src="Component.js"></script>
+    <script src="GameObject.js"></script>
+    <script src="RectangleDrawComponent.js"></script>
+    <script src="RectangleUpdateComponent.js"></script>
+    <script src="RectangleGameObject.js"></script>
+    <script src="keys.js"></script>
+    <script src="PlayerGo.js"></script>
+    <script src="PLayerUpdate.js"></script>
+    <script src="PlayerDraw.js"></script>
+    <script src="ProjGO.js"></script>
+    <script src="ProjUpdate.js"></script>
+    <script src="ProjDraw.js"></script>
+    <script src="EnemyGO.js"></script>
+    <script src="EnemyUpdate.js"></script>
+    <script src="EnemyDraw.js"></script>
+    <script src="StarsGO.js"></script>
+    <script src="StarsUpdate.js"></script>
+    <script src="StarsDraw.js"></script>
+    <script src="UIGO.js"></script>
+    <script src="UIUpdate.js"></script>
+    <script src="UIDraw.js"></script>
+
+    <script>
+        "use strict"
+        let { canvas, ctx } = getCanvas();
+
+        let gameObjects = [];
+        let player = new PlayerGO(playerX,playerY,playerW,playerH,0,255,255);
+        let UI = new UIGO(score, timeLen, health);
+        let updateCnt = 0;
+
+        function tick() {
+            update()
+            draw()
+            Time.timePassed += Time.secondsBetweenFrame;
+        }
+
+        function update() {
+            if( Math.floor(Time.timePassed * 100) % 1 == 0 && starCnt != maxstars){
+                let x = getRandomInt(starX, window.innerWidth);
+                stars.push(new StarsGO(x, starY, starW, starH));
+                starCnt++;
+            }
+            for (let star of stars) {
+                star.update();
+            }
+
+            player.update();
+            for (let proj of projectiles) {
+                proj.update();
+            }
+
+            if( updateCnt % 125 == 0 && enemyCnt != maxEnemys){
+                let x = getRandomInt(5, window.innerWidth - (enemyW + 5));
+                let r = 255;
+                let g = 0;
+                let b = 0;
+                enemys.push(new EnemyGO(x, enemyY, enemyW, enemyH, r, g, b));
+                enemyCnt++;
+            }
+            let i = 0;
+            for (let enemy of enemys) {
+                enemy.update();
+                let j = 0;
+                for (let proj of projectiles){
+                    if ((proj.x >= enemy.x) && (proj.x + projW <= enemy.x + enemyW) && (proj.y <= enemy.y + enemyY)){
+                        enemys.splice(i,1);
+                        projectiles.splice(j,1);
+                        score += enemyScore;
+                    }
+                    j++;
+                }
+                i++;
+            }
+
+
+
+
+
+            UI.update();
+            updateCnt++;
+        }
+
+        function draw() {
+
+            ctx.fillStyle = "black"
+
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            for (let star of stars) {
+                star.draw();
+            }
+
+            player.draw();
+
+            for (let proj of projectiles) {
+                proj.draw();
+            }
+
+            for (let enemy of enemys) {
+                enemy.draw();
+            }
+
+            UI.draw();
+        }
+
+        setInterval(tick, Time.millisecondsBetweenFrames)
+
+    </script>
+</body>
+
+</html>
