@@ -166,7 +166,7 @@ class Input {
   // }
 
     function keypress(event) {
-      //console.log(`Keys: ${event.key}, Modifier keys: Control: ${event.ctrlKey}, Alt: ${event.altKey}, Shift: ${event.shiftKey}, Meta Key: ${event.metaKey}`);
+      console.log(`Keys: ${event.key}, Modifier keys: Control: ${event.ctrlKey}, Alt: ${event.altKey}, Shift: ${event.shiftKey}, Meta Key: ${event.metaKey}`);
     }
 
     // Based on https://stackoverflow.com/questions/381795/how-to-disable-right-click-context-menu-in-javascript

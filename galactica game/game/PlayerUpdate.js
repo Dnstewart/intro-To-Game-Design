@@ -29,38 +29,38 @@ class PlayerUpdate extends Component{
         }
 
         for(let i = 0; i < 4; i++){
-        //    if (Input.getKey(i).code == "ArrowUp" || Input.getKey(i).code == "KeyW") {
-        //         if (this.y > 0) {
-        //             this.y -= 5;
-        //         }
-        //         else {
-        //             console.log("Top boundry reached.\n" + `${this.y}`);
-        //         }
-        //     }
-        //     if (Input.getKey(i).code == "ArrowDown" || Input.getKey(i).code == "KeyS") {
-        //         if (this.y + this.h < window.innerHeight) {
-        //             this.y += 5;
-        //         }
-        //         else {
-        //             console.log("Bottom boundry reached.\n");
-        //         }
-        //     }
-        //     if (Input.getKey(i).code == "ArrowLeft" || Input.getKey(i).code == "KeyA") {
-        //         if (this.x > 0) {
-        //             this.x -= 5;
-        //         }
-        //         else {
-        //             console.log("Left boundry reached.\n");
-        //         }
-        //     }
-        //     if (Input.getKey(i).code == "ArrowRight" || Input.getKey(i).code == "KeyD") {
-        //         if (this.x + this.w < window.innerWidth) {
-        //             this.x += 5;
-        //         }
-        //         else {
-        //             console.log("Right boundry reached.\n");
-        //         }
-        //     } 
+           if (Input.getKeyDown(i) == "w") {
+                if (this.y > 0) {
+                    this.y -= 5;
+                }
+                else {
+                    console.log("Top boundry reached.\n" + `${this.y}`);
+                }
+            }
+            if (Input.getKeyDown(i) == "s") {
+                if (this.y + this.h < window.innerHeight) {
+                    this.y += 5;
+                }
+                else {
+                    console.log("Bottom boundry reached.\n");
+                }
+            }
+            if (Input.getKeyDown(i) == "a") {
+                if (this.x > 0) {
+                    this.x -= 5;
+                }
+                else {
+                    console.log("Left boundry reached.\n");
+                }
+            }
+            if (Input.getKeyDown(i) == "d") {
+                if (this.x + this.w < window.innerWidth) {
+                    this.x += 5;
+                }
+                else {
+                    console.log("Right boundry reached.\n");
+                }
+            } 
         }
         
     }
