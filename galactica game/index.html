@@ -8,7 +8,7 @@
 
 <body>
     <canvas id="canv"></canvas>
-    <script src="scripts.js"></script>
+    <!--<script src="scripts.js"></script>
     <script src="time.js"></script>
     <script src="Component.js"></script>
     <script src="GameObject.js"></script>
@@ -30,89 +30,126 @@
     <script src="StarsDraw.js"></script>
     <script src="UIGO.js"></script>
     <script src="UIUpdate.js"></script>
-    <script src="UIDraw.js"></script>
+    <script src="UIDraw.js"></script>-->
 
-    <script>
+    <script type="module">
         "use strict"
+        import { getCanvas, getRandomInt} from "./engine/scripts.js"
+        import Time from "./engine/time.js"
+        import GameObject from "./engine/GameObject.js"
+        import Component from "./engine/Component.js"
+        import Input from "./engine/Input.js"
+
+        import PlayerDraw from "./game/PlayerDraw.js"
+        import PlayerGO from "./game/PlayerGO.js"
+        import PlayerUpdate from "./game/PlayerUpdate.js"
+
+        import ProjDraw from "./game/ProjDraw.js"
+        import ProjGO from "./game/ProjGO.js"
+        import ProjUpdate from "./game/ProjUpdate.js"
+
+        import EnemyDraw from "./game/EnemyDraw.js"
+        import EnemyGO from "./game/EnemyGO.js"
+        import EnemyUpdate from "./game/EnemyUpdate.js"
+
+        import StarsDraw from "./game/StarsDraw.js"
+        import StarsGO from "./game/StarsGO.js"
+        import StarsUpdate from "./game/StarsUpdate.js"
+
+        import UIDraw from "./game/UIDraw.js"
+        import UIGO from "./game/UIGO.js"
+        import UIUpdate from "./game/UIUpdate.js"
+
+        import Constants from "./game/Constants.js"
+
+        Input.attach(document);
+
         let { canvas, ctx } = getCanvas();
 
-        let gameObjects = [];
-        let player = new PlayerGO(playerX,playerY,playerW,playerH,0,255,255);
-        let UI = new UIGO(score, timeLen, health);
+        //let gameObjects = [];
+        let stars = [];
+        let max = Constants.max;
+        let maxWidth = Constants.maxWidth;
+        let height = Constants.height;
+        let startX = Constants.startX;
+        let startY = Constants.startY;
+        let width = Constants.width;
+
+        let player = new PlayerGO(Constants.playerX,Constants.playerY,
+        Constants.playerW,Constants.playerH,0,255,255);
+        let UI = new UIGO(Constants.score, Constants.timeLen, Constants.health);
         let updateCnt = 0;
 
         function tick() {
+            Input.update();
             update()
             draw()
             Time.timePassed += Time.secondsBetweenFrame;
         }
 
+
         function update() {
-            if( Math.floor(Time.timePassed * 100) % 1 == 0 && starCnt != maxstars){
-                let x = getRandomInt(starX, window.innerWidth);
-                stars.push(new StarsGO(x, starY, starW, starH));
-                starCnt++;
+            if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
+            Constants.starCnt != Constants.maxstars){
+                let x = getRandomInt(Constants.starX, window.innerWidth);
+                stars.push(new StarsGO(x, Constants.starY, Constants.starW, Constants.starH));
+                Constants.starCnt++;
             }
-            for (let star of stars) {
+            for (let star of Constants.stars) {
                 star.update();
             }
 
             player.update();
-            for (let proj of projectiles) {
+            for (let proj of Constants.projectiles) {
                 proj.update();
             }
 
-            if( updateCnt % 125 == 0 && enemyCnt != maxEnemys){
-                let x = getRandomInt(5, window.innerWidth - (enemyW + 5));
+            if( updateCnt % 125 == 0 && Constants.enemyCnt != Constants.maxEnemys){
+                let x = getRandomInt(5, window.innerWidth - (Constants.enemyW + 5));
                 let r = 255;
                 let g = 0;
                 let b = 0;
-                enemys.push(new EnemyGO(x, enemyY, enemyW, enemyH, r, g, b));
-                enemyCnt++;
+                Constants.enemys.push(new EnemyGO(x, Constants.enemyY, Constants.enemyW, Constants.enemyH, r, g, b));
+                Constants.enemyCnt++;
             }
             let i = 0;
-            for (let enemy of enemys) {
+            for (let enemy of Constants.enemys) {
                 enemy.update();
                 let j = 0;
-                for (let proj of projectiles){
-                    if ((proj.x >= enemy.x) && (proj.x + projW <= enemy.x + enemyW) && (proj.y <= enemy.y + enemyY)){
-                        enemys.splice(i,1);
-                        projectiles.splice(j,1);
-                        score += enemyScore;
+                for (let proj of Constants.projectiles){
+                    if ((proj.x >= enemy.x) && (proj.x + Constants.projW <= enemy.x + Constants.enemyW) && (proj.y <= enemy.y + enemyY)){
+                        Constants.enemys.splice(i,1);
+                        Constants.projectiles.splice(j,1);
+                        Constants.score += Constants.enemyScore;
                     }
                     j++;
                 }
                 i++;
             }
-
-
-
-
-
             UI.update();
             updateCnt++;
         }
 
+
         function draw() {
 
             ctx.fillStyle = "black"
-
             ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            for (let star of stars) {
-                star.draw();
+            for (let star of Constants.stars) {
+                star.draw(ctx);
             }
 
-            player.draw();
+            // player.draw(ctx);
 
-            for (let proj of projectiles) {
-                proj.draw();
-            }
+            // for (let proj of Constants.projectiles) {
+            //     proj.draw(ctx);
+            // }
 
-            for (let enemy of enemys) {
-                enemy.draw();
-            }
+            // for (let enemy of Constants.enemys) {
+            //     enemy.draw(ctx);
+            // }
 
-            UI.draw();
+            // UI.draw(ctx);
         }
 
         setInterval(tick, Time.millisecondsBetweenFrames)
