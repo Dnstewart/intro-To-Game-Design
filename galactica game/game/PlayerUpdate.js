@@ -9,6 +9,9 @@ import Component from "../engine/Component.js"
 import Constants from "./Constants.js"
 //import Time from "../engine/time.js"
 import Input from "../engine/input.js"
+import ProjGO from "./ProjGO.js"
+
+Input.attach(document);
 
 class PlayerUpdate extends Component{
     constructor(parent,x,y,w,h,r,g,b){
@@ -25,11 +28,15 @@ class PlayerUpdate extends Component{
         if (Input.mousePressed){
             Constants.projectiles.push(new ProjGO(this.x + 20,this.y + 10,Constants.projW,Constants.projH,0,255,150));
             Constants.projCnt++;
+            console.log("pew");
             Input.mousePressed = false;
         }
-
-        for(let i = 0; i < 4; i++){
-           if (Input.getKeyDown(i) == "w") {
+        // console.log(`${Input.getKey(0)}`);
+        // console.log(`${Input.getKey(1)}`);
+        // console.log(`${Input.getKey(2)}`);
+        // console.log(`${Input.getKey(3)}`);
+       //for(let i = 0; i < 4; i++){
+           if (Input.getKey('w')) {
                 if (this.y > 0) {
                     this.y -= 5;
                 }
@@ -37,7 +44,7 @@ class PlayerUpdate extends Component{
                     console.log("Top boundry reached.\n" + `${this.y}`);
                 }
             }
-            if (Input.getKeyDown(i) == "s") {
+            if (Input.getKey('s')) {
                 if (this.y + this.h < window.innerHeight) {
                     this.y += 5;
                 }
@@ -45,7 +52,7 @@ class PlayerUpdate extends Component{
                     console.log("Bottom boundry reached.\n");
                 }
             }
-            if (Input.getKeyDown(i) == "a") {
+            if (Input.getKey('a')) {
                 if (this.x > 0) {
                     this.x -= 5;
                 }
@@ -53,7 +60,7 @@ class PlayerUpdate extends Component{
                     console.log("Left boundry reached.\n");
                 }
             }
-            if (Input.getKeyDown(i) == "d") {
+            if (Input.getKey('d')) {
                 if (this.x + this.w < window.innerWidth) {
                     this.x += 5;
                 }
@@ -61,7 +68,7 @@ class PlayerUpdate extends Component{
                     console.log("Right boundry reached.\n");
                 }
             } 
-        }
+       //}
         
     }
 }

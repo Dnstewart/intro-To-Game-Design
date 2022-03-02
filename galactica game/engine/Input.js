@@ -22,10 +22,6 @@ class Input {
   static frameScrollWheel = 0; //The scroll wheel change that will be reported next frame
 
   static mousePressed = false;
-  static up = false;
-  static down = false;
-  static left = false;
-  static right = false;
 
   //Update the frame-centric variables
   static update() {
@@ -139,43 +135,17 @@ class Input {
       Input.mousePressed = true;
     }
 
-  // function keyCheckDown(e) {
-  //     if (e.code == "ArrowUp" || e.code == "KeyW")
-  //     {
-  //       Input.up = true;
-  //     }
-  //     else if (e.code == "ArrowDown" || e.code == "KeyS")
-  //     {
-  //       Input.down = true;
-  //     }
-  //     else if (e.code == "ArrowLeft" || e.code == "KeyA")
-  //     {
-  //       Input.left = true;
-  //     }
-  //     else if (e.code == "ArrowRight" || e.code == "KeyD")
-  //     {
-  //       Input.right = true;
-  //     }
-  // }
-
-  // function keyCheckUp(e) {
-  //   Input.up = false;
-  //   Input.down = false;
-  //   Input.left = false;
-  //   Input.right = false;
-  // }
-
     function keypress(event) {
-      console.log(`Keys: ${event.key}, Modifier keys: Control: ${event.ctrlKey}, Alt: ${event.altKey}, Shift: ${event.shiftKey}, Meta Key: ${event.metaKey}`);
+      //console.log(`Keys: ${event.key}, Modifier keys: Control: ${event.ctrlKey}, Alt: ${event.altKey}, Shift: ${event.shiftKey}, Meta Key: ${event.metaKey}`);
     }
 
     // Based on https://stackoverflow.com/questions/381795/how-to-disable-right-click-context-menu-in-javascript
     // Kills the right mouse context menu
     function contextmenu(event) {
-      if (event.preventDefault != undefined)
-        event.preventDefault();
-      if (event.stopPropagation != undefined)
-        event.stopPropagation();
+      // if (event.preventDefault != undefined)
+      //   event.preventDefault();
+      // if (event.stopPropagation != undefined)
+      //   event.stopPropagation();
       return false;
     }
   }
