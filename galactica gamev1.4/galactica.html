@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Discount Galactica</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+
+<body>
+    <canvas id="canv"></canvas>
+
+    <script type="module">
+        "use strict"
+        import {getCanvas, getRandomInt} from "./engine/scripts.js"
+        import Time from "./engine/time.js"
+        import Input from "./engine/Input.js"
+        import Game from "./engine/Game.js"
+        //import MainScene from "./game/MainScene.js"
+
+        import GameObject from "./engine/GameObject.js"
+        import Component from "./engine/Component.js"
+       
+
+        import PlayerDraw from "./game/PlayerDraw.js"
+        import PlayerGO from "./game/PlayerGO.js"
+        import PlayerUpdate from "./game/PlayerUpdate.js"
+
+        import ProjDraw from "./game/ProjDraw.js"
+        import ProjGO from "./game/ProjGO.js"
+        import ProjUpdate from "./game/ProjUpdate.js"
+
+        import EnemyDraw from "./game/EnemyDraw.js"
+        import EnemyGO from "./game/EnemyGO.js"
+        import EnemyUpdate from "./game/EnemyUpdate.js"
+
+        import StarsDraw from "./game/StarsDraw.js"
+        import StarsGO from "./game/StarsGO.js"
+        import StarsUpdate from "./game/StarsUpdate.js"
+
+        import RockDraw from "./game/RockDraw.js"
+        import RockGO from "./game/RockGO.js"
+        import RockUpdate from "./game/RockUpdate.js"
+
+        import UIDraw from "./game/UIDraw.js"
+        import UIGO from "./game/UIGO.js"
+        import UIUpdate from "./game/UIUpdate.js"
+
+        import Constants from "./game/Constants.js"
+
+        Input.attach(document);
+
+        let { canvas, ctx } = getCanvas();
+
+        let gameObjects = Constants.gameObjects;
+
+        let player = new PlayerGO(Constants.playerX,Constants.playerY,
+        Constants.playerW,Constants.playerH,0,255,255);
+        let UI = new UIGO(Constants.score, Constants.timeLen, Constants.health);
+        let updateCnt = 0;
+
+        function tick() {
+            Input.update();
+            update();
+            draw();
+            
+            // destroy();
+            // destroy function will be used and will iterate throught the game objects and 
+            // find game objets with a boolean variabe called destroy and if its false remove 
+            // it from the array.
+
+            Time.timePassed += Time.secondsBetweenFrame;
+        }
+
+
+        function update() {
+            if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
+            Constants.starCnt != Constants.maxstars){
+                let x = getRandomInt(Constants.starX, window.innerWidth);
+                Constants.stars.push(new StarsGO(x, Constants.starY, Constants.starW, Constants.starH));
+                Constants.starCnt++;
+            }
+            for (let star of Constants.stars) {
+                star.update();
+            }
+
+            if( Math.floor(Time.timePassed * 100) % 100 == 0 && 
+            Constants.rockCnt != Constants.maxrocks){
+                let x = getRandomInt(Constants.rockX, window.innerWidth);
+                Constants.rocks.push(new RockGO(x, Constants.rockY, 
+                getRandomInt(Constants.rockW, Constants.rockW + 25), getRandomInt(Constants.rockH, Constants.rockH + 25)));
+                Constants.rockCnt++;
+            }
+            for (let rock of Constants.rocks) {
+                rock.update();
+            }
+
+            player.update();
+
+            for (let proj of Constants.projectiles) {
+                proj.update();
+            }
+
+            if( updateCnt % 125 == 0 && Constants.enemyCnt != Constants.maxEnemys){
+                let x = getRandomInt(5, window.innerWidth - (Constants.enemyW + 5));
+                let r = 255;
+                let g = 0;
+                let b = 0;
+                Constants.enemys.push(new EnemyGO(x, Constants.enemyY, Constants.enemyW, Constants.enemyH, r, g, b));
+                Constants.enemyCnt++;
+            }
+
+            for (let enemy of Constants.enemys) {
+                enemy.update();
+            }
+            UI.update();
+            updateCnt++;
+        }
+
+
+        function draw() {
+
+            ctx.fillStyle = "black"
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            for (let star of Constants.stars) {
+                star.draw(ctx);
+            }
+
+            for (let rock of Constants.rocks) {
+                rock.draw(ctx);
+            }
+
+            player.draw(ctx);
+
+            for (let proj of Constants.projectiles) {
+                proj.draw(ctx);
+            }
+
+            for (let enemy of Constants.enemys) {
+                enemy.draw(ctx);
+            }
+
+            UI.draw(ctx);
+        }
+
+        setInterval(tick, Time.millisecondsBetweenFrames)
+
+    </script>
+</body>
+
+</html>
