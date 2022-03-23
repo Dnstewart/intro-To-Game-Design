@@ -6,6 +6,10 @@
 // let maxRocks = 20;
 // let rockCnt = 1;
 // let rockScore = 100;
+
+// idea: make the rocks explode into two versions that are half the size and 
+// make the half size rock be destroyed in one hit.
+
 import Component from "../engine/Component.js"
 import Constants from "./Constants.js"
 //import scripts from "../engine/scripts.js";

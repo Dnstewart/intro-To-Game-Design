@@ -6,8 +6,6 @@
 import Component from "../engine/Component.js"
 import Constants from "./Constants.js"
 import Time from "../engine/time.js"
-//import Input from "../engine/input.js"
-
 
 class UIUpdate extends Component{
     constructor(parent){
@@ -25,10 +23,9 @@ class UIUpdate extends Component{
         }
         let s = Constants.score;
         let h = Constants.health; 
-        //consolidate the text into one line some how or in the main scene copy these and just input the values
-        // ctx.fillText('Time: ' + `${tl}`,Constants.UIX,Constants.UIY);
-        // ctx.fillText('Score: ' + `${s}`,Constants.UIX + 150,Constants.UIY);
-        // ctx.fillText('Health: ' + `${h}`,Constants.UIX + 300,Constants.UIY);
+        let out = 'Time: ' + `${tl}` +' Score: ' + `${s}` + ' Health: ' + `${h}`;
+        //let text = this.parent.getComponent("Text");
+        //text.text = out; remove slashes
     }
 }
 export default UIUpdate;

@@ -1,8 +1,9 @@
-import Component from "../engine/Component.js"
-import GameObject from "../engine/GameObject.js"
+
+import GameObject from "../engine/GameObject.js";
 import Rectangle from "../engine/Rectangle.js";
+import RectangleDraw from "../engine/RectangleDraw.js";
 import StarsUpdate from "./StarsUpdate.js"
-import StarsDraw from "./StarsDraw.js"
+import StarsDraw from "./StarsDraw.js"//remove
 
 class StarsGO extends GameObject{
     constructor(x,y,w,h,r,g,b){
@@ -16,5 +17,13 @@ class StarsGO extends GameObject{
     draw(ctx){
       this.components.filter(c=>c.draw).forEach(c=>c.draw(ctx));
     }
+    /*
+  constructor(x,y,w,h,r,g,b){
+    super();
+    this.components.push(new Rectangle(this, x,y,w,h));
+    this.components.push(new RectangleDraw(this, `rgb(${r},${g},${b})`, 
+    `rgb(${r},${g},${b})`));
+    this.components.push(new StarsUpdate(this));
+  }*/
 }
 export default StarsGO;
