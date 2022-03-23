@@ -1,7 +1,8 @@
-import Component from "../engine/Component.js"
-import GameObject from "../engine/GameObject.js"
-import EnemyUpdate from "./EnemyUpdate.js"
-import EnemyDraw from "./EnemyDraw.js"
+import Component from "../engine/Component.js";
+import GameObject from "../engine/GameObject.js";
+import Rectangle from "../engine/Rectangle.js";
+import EnemyUpdate from "./EnemyUpdate.js";
+import EnemyDraw from "./EnemyDraw.js";
 
 class EnemyGO extends GameObject{
     constructor(x,y,w,h,r,g,b){

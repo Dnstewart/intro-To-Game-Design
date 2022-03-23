@@ -1,5 +1,6 @@
 import Component from "../engine/Component.js"
 import GameObject from "../engine/GameObject.js"
+import Rectangle from "../engine/Rectangle.js";
 import ProjUpdate from "./ProjUpdate.js"
 import ProjDraw from "./ProjDraw.js"
 

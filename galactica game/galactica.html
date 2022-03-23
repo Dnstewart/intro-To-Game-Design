@@ -2,43 +2,24 @@
 <html>
 
 <head>
-    <title>My first html</title>
+    <title>Discount Galactica</title>
     <link href="./style.css" rel="stylesheet">
 </head>
 
 <body>
     <canvas id="canv"></canvas>
-    <!--<script src="scripts.js"></script>
-    <script src="time.js"></script>
-    <script src="Component.js"></script>
-    <script src="GameObject.js"></script>
-    <script src="RectangleDrawComponent.js"></script>
-    <script src="RectangleUpdateComponent.js"></script>
-    <script src="RectangleGameObject.js"></script>
-    <script src="keys.js"></script>
-    <script src="PlayerGo.js"></script>
-    <script src="PLayerUpdate.js"></script>
-    <script src="PlayerDraw.js"></script>
-    <script src="ProjGO.js"></script>
-    <script src="ProjUpdate.js"></script>
-    <script src="ProjDraw.js"></script>
-    <script src="EnemyGO.js"></script>
-    <script src="EnemyUpdate.js"></script>
-    <script src="EnemyDraw.js"></script>
-    <script src="StarsGO.js"></script>
-    <script src="StarsUpdate.js"></script>
-    <script src="StarsDraw.js"></script>
-    <script src="UIGO.js"></script>
-    <script src="UIUpdate.js"></script>
-    <script src="UIDraw.js"></script>-->
 
     <script type="module">
         "use strict"
         import {getCanvas, getRandomInt} from "./engine/scripts.js"
         import Time from "./engine/time.js"
+        import Input from "./engine/Input.js"
+        import Game from "./engine/Game.js"
+        //import MainScene from "./game/MainScene.js"
+
         import GameObject from "./engine/GameObject.js"
         import Component from "./engine/Component.js"
-        import Input from "./engine/Input.js"
+       
 
         import PlayerDraw from "./game/PlayerDraw.js"
         import PlayerGO from "./game/PlayerGO.js"
@@ -56,6 +37,10 @@
         import StarsGO from "./game/StarsGO.js"
         import StarsUpdate from "./game/StarsUpdate.js"
 
+        import RockDraw from "./game/RockDraw.js"
+        import RockGO from "./game/RockGO.js"
+        import RockUpdate from "./game/RockUpdate.js"
+
         import UIDraw from "./game/UIDraw.js"
         import UIGO from "./game/UIGO.js"
         import UIUpdate from "./game/UIUpdate.js"
@@ -66,14 +51,7 @@
 
         let { canvas, ctx } = getCanvas();
 
-        //let gameObjects = [];
-        //let stars = [];
-        // let max = Constants.max;
-        // let maxWidth = Constants.maxWidth;
-        // let height = Constants.height;
-        // let startX = Constants.startX;
-        // let startY = Constants.startY;
-        // let width = Constants.width;
+        let gameObjects = Constants.gameObjects;
 
         let player = new PlayerGO(Constants.playerX,Constants.playerY,
         Constants.playerW,Constants.playerH,0,255,255);
@@ -82,8 +60,14 @@
 
         function tick() {
             Input.update();
-            update()
-            draw()
+            update();
+            draw();
+            
+            // remove();
+            // destroy function will be used and will iterate throught the game objects and 
+            // find game objets with a boolean variabe called destroy and if its false remove 
+            // it from the array.
+
             Time.timePassed += Time.secondsBetweenFrame;
         }
 
@@ -99,7 +83,19 @@
                 star.update();
             }
 
+            if( Math.floor(Time.timePassed * 100) % 100 == 0 && 
+            Constants.rockCnt != Constants.maxrocks){
+                let x = getRandomInt(Constants.rockX, window.innerWidth);
+                Constants.rocks.push(new RockGO(x, Constants.rockY, 
+                getRandomInt(Constants.rockW, Constants.rockW + 25), getRandomInt(Constants.rockH, Constants.rockH + 25)));
+                Constants.rockCnt++;
+            }
+            for (let rock of Constants.rocks) {
+                rock.update();
+            }
+
             player.update();
+
             for (let proj of Constants.projectiles) {
                 proj.update();
             }
@@ -112,19 +108,9 @@
                 Constants.enemys.push(new EnemyGO(x, Constants.enemyY, Constants.enemyW, Constants.enemyH, r, g, b));
                 Constants.enemyCnt++;
             }
-            let i = 0;
+
             for (let enemy of Constants.enemys) {
                 enemy.update();
-                let j = 0;
-                for (let proj of Constants.projectiles){
-                    if ((proj.x >= enemy.x) && (proj.x + Constants.projW <= enemy.x + Constants.enemyW) && (proj.y <= enemy.y + enemyY)){
-                        Constants.enemys.splice(i,1);
-                        Constants.projectiles.splice(j,1);
-                        Constants.score += Constants.enemyScore;
-                    }
-                    j++;
-                }
-                i++;
             }
             UI.update();
             updateCnt++;
@@ -137,6 +123,10 @@
             ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             for (let star of Constants.stars) {
                 star.draw(ctx);
+            }
+
+            for (let rock of Constants.rocks) {
+                rock.draw(ctx);
             }
 
             player.draw(ctx);

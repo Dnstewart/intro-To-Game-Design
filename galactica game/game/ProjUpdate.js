@@ -32,6 +32,16 @@ class ProjUpdate extends Component{
         else{
             Constants.projectiles.shift();
         }
+
+        let j = 0;
+        for (let enemy of Constants.enemys){
+            if ((this.x >= enemy.x) && (this.x + Constants.projW <= enemy.x + Constants.enemyW) && (this.y <= enemy.y + enemyH)){
+                //Constants.enemys.splice(j,1);
+                //Constants.projectiles.splice(j,1);
+                Constants.score += Constants.enemyScore;
+            }
+            j++;
+        }
     }
 }
 export default ProjUpdate;

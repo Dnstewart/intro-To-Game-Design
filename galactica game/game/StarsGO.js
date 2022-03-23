@@ -1,5 +1,6 @@
 import Component from "../engine/Component.js"
 import GameObject from "../engine/GameObject.js"
+import Rectangle from "../engine/Rectangle.js";
 import StarsUpdate from "./StarsUpdate.js"
 import StarsDraw from "./StarsDraw.js"
 
