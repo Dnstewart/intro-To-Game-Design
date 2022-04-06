@@ -12,29 +12,22 @@
 
 import Component from "../engine/Component.js"
 import Constants from "./Constants.js"
-//import scripts from "../engine/scripts.js";
-// import Time from "../engine/time.js";
-//import Game from "../engine/Game.js";
-//import RockGO from "./RockGO.js";
+import {getRandomInt} from "../engine/scripts.js";
+import Time from "../engine/time.js";
+import Game from "../engine/Game.js";
+import RockGO from "./RockGO.js";
 
 class RockUpdate extends Component{
-    constructor(parent,x,y,w,h,r,g,b){
+    constructor(parent){
         super(parent);
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.r = r;
-        this.g = g;
-        this.b = b;
     }
     update() {
-        this.y += 2;
-        if(this.y > window.innerHeight){
-            Constants.rocks.shift(); 
+        let rectangle = this.parent.getComponent("Rectangle");
+        rectangle.y += .75;
+        if(rectangle.y > window.innerHeight){
+            this.parent.markForDelete = true;
             Constants.rockCnt--;
         } 
-
         // if( Math.floor(Time.timePassed * 100) % 100 == 0 && 
         // Constants.rockCnt != Constants.maxrocks){
         //     let x = getRandomInt(Constants.rockX, window.innerWidth);

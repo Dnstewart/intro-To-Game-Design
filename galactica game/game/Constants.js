@@ -7,7 +7,7 @@ class Constants{
     static width = 10;
     static height = 50;
 
-    static gameObjects = [];
+    static tempArray = [];
 
     static playerX = window.innerWidth * 0.5;
     static playerY = window.innerHeight - 50;
@@ -18,10 +18,10 @@ class Constants{
 
     static enemyX = 0;
     static enemyY = 0;
-    static enemyW = 25;
-    static enemyH = 25;
+    static enemyW = 35;
+    static enemyH = 35;
     static enemys = [];
-    static maxEnemys = 20;
+    static maxEnemys = 2000;
     static enemyCnt = 1;
     static enemyScore = 100;
 
@@ -38,7 +38,7 @@ class Constants{
     static starW = 2;
     static starH = 2;
     static stars = [];
-    static maxstars = 200;
+    static maxstars = 20000;
     static starCnt = 1;
 
     static rockX = 0;
@@ -46,7 +46,7 @@ class Constants{
     static rockW = 15;
     static rockH = 15;
     static rocks = [];
-    static maxRocks = 10;
+    static maxRocks = 1500;
     static rockCnt = 1;
 
     static timeLen = 0;

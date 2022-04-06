@@ -43,6 +43,10 @@ class Input {
 
     this.frameScrollWheel = this.scrollWheel;
     this.scrollWheel = 0;
+    
+    if (this.mousePressed){
+      this.mousePressed = false;
+    }
   }
 
   //Get the values of different input states

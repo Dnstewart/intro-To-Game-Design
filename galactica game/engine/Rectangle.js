@@ -7,6 +7,7 @@ class Rectangle extends Component {
         this.y = y;
         this.w = w;
         this.h = h;
+        this.markForDelete = false;
     }
 
 }

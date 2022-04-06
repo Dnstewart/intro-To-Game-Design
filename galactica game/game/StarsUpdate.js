@@ -5,32 +5,29 @@
 // let stars = [];
 // let maxstars = 200;
 // let starCnt = 1;
-import Component from "../engine/Component.js"
-//import scripts from "../engine/scripts.js";
-//import Time from "../engine/time.js"
-//import Game from "../engine/Game.js"
-//import StarsGO from "./StarsGO.js"
-import Constants from "./Constants.js"
+import Component from "../engine/Component.js";
+import {getRandomInt} from "../engine/scripts.js";
+import Time from "../engine/time.js";
+import Game from "../engine/Game.js";
+import StarsGO from "./StarsGO.js";
+import Constants from "./Constants.js";
 
 class StarsUpdate extends Component{
-    constructor(parent,x,y,w,h){
+    constructor(parent){
         super(parent);
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
     }
     update() {
-        this.y += 5;
-        if(this.y > window.innerHeight + Constants.starH){
-            Constants.stars.shift(); 
-           Constants.starCnt--;
+        let circle = this.parent.getComponent("Circle");
+        circle.y += 3.5;
+        if(circle.y > window.innerHeight + Constants.starH){
+            Game.scene().back.shift();
+            Constants.starCnt--;
         }
 
         // if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
         //     Constants.starCnt != Constants.maxstars){
         //         let x = getRandomInt(Constants.starX, window.innerWidth);
-        //         Game.scene().gameObjects.push(new StarsGO(x, Constants.starY, Constants.starW, Constants.starH));
+        //         Game.scene().stars.push(new StarsGO(x, Constants.starY, 2, getRandomInt(0, 255),255, 255));
         //         Constants.starCnt++;
         // }
     }

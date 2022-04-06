@@ -7,6 +7,7 @@ class Text extends Component {
         this.y = y;
         this.text = text;
         this.font = font;
+        this.markForDelete = false;
     }
 
 }

@@ -6,39 +6,38 @@
 // let maxEnemys = 20;
 // let enemyCnt = 1;
 // let enemyScore = 100;
-import Component from "../engine/Component.js"
-import Constants from "./Constants.js"
-//import scripts from "../engine/scripts.js";
-// import Time from "../engine/time.js";
-//import Game from "../engine/Game.js";
-//import EnemyGO from "./EnemyGO.js";
+import Component from "../engine/Component.js";
+import Game from "../engine/Game.js";
+import Constants from "./Constants.js";
 
 class EnemyUpdate extends Component{
-    constructor(parent,x,y,w,h,r,g,b){
+    constructor(parent){
         super(parent);
-        this.x = x;
-        this.y = y;
-        this.w = w;
-        this.h = h;
-        this.r = r;
-        this.g = g;
-        this.b = b;
     }
     update() {
-        this.y += 1;
-        if(this.y > window.innerHeight){
-            Constants.enemys.shift(); 
+        let rectangle = this.parent.getComponent("Rectangle");
+        rectangle.y += 1.5;
+        if(rectangle.y > window.innerHeight){
+            this.parent.markForDelete = true;
+            Constants.health--;
             Constants.enemyCnt--;
         }
 
-        // if( Constants.updateCnt % 125 == 0 && Constants.enemyCnt != Constants.maxEnemys){
-        //     let x = getRandomInt(5, window.innerWidth - (Constants.enemyW + 5));
-        //     let r = 255;
-        //     let g = 0;
-        //     let b = 0;
-        //     Game.scene().gameObjects.push(new EnemyGO(x, Constants.enemyY, Constants.enemyW, Constants.enemyH, r, g, b));
-        //     Constants.enemyCnt++;
-        // }
+        let proj = Game.findByType("ProjGO");
+        let i = 0;
+        for (let p of proj){
+            let circle = p.getComponent("Circle");
+            let w = rectangle.w + circle.r;
+            let h = rectangle.h + circle.r;
+            let x = rectangle.x - circle.r;
+            let y = rectangle.y - circle.r;
+            if(circle.x > x && circle.y > y && circle.x < x + w && circle.y < y + h){
+                Constants.score += 100;
+                this.parent.markForDelete = true;
+                proj[i].parent.markForDelete = true;//undefined
+            }
+            i++;
+        }
     }
 }
 export default EnemyUpdate;
