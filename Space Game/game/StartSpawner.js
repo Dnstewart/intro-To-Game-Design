@@ -5,7 +5,6 @@ import Constants from "./Constants.js";
 import {getRandomInt} from "../engine/scripts.js";
 import Input from "../engine/Input.js";
 import Collisions from "../engine/Collisions.js";
-//import ProjGO from "./ProjGO.js";
 import EnemyGO from "./EnemyGO.js";
 import RockGO from "./RockGO.js";
 import StarsGO from "./StarsGO.js";
@@ -24,7 +23,11 @@ class StartSpawner extends Component {
         if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
             Constants.starCnt != Constants.maxstars){
             let x = getRandomInt(Constants.starX, window.innerWidth);
-            Game.scene().back.push(new StarsGO(x, Constants.starY, 2.5, getRandomInt(0, 255),255, 255));
+            let r = getRandomInt(0, 255);
+            Game.scene().back.push(new StarsGO(x, Constants.starY, 3, r,255, 255));
+            
+            
+            
             Constants.starCnt++;
         }
     }

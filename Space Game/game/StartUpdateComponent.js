@@ -13,8 +13,6 @@ class StartUpdateComponent extends Component {
   update() {
     Input.attach(document);
     if(Input.mousePressed){
-      // this.time += Time.secondsBetweenFrame;
-      // if(this.time > 5){
       Game.changeScene(1);
       Constants.tempArray = Game.scene().back;
     }

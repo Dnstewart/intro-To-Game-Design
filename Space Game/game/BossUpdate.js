@@ -3,17 +3,17 @@ import Game from "../engine/Game.js";
 import Constants from "./Constants.js";
 import EnemyProjGO from "./EnemyProjGO.js";
 
-class EnemyUpdate extends Component{
+class BossUpdate extends Component{
     constructor(parent){
         super(parent);
+        this.bossHealth = 20;
     }
     update() {
         let rectangle = this.parent.getComponent("Rectangle");
-        rectangle.y += 1.25 + (Constants.updateCnt * 0.0005);
+        rectangle.y += .5 + (Constants.updateCnt * 0.0005);
         if(rectangle.y > window.innerHeight){
             this.parent.markForDelete = true;
-            Constants.health--;
-            Constants.enemyCnt--;
+            Constants.health = 0;
         }
 
         if (Constants.updateCnt % 250 == 0){
@@ -21,4 +21,4 @@ class EnemyUpdate extends Component{
         }
     }
 }
-export default EnemyUpdate;
+export default BossUpdate;

@@ -1,15 +1,3 @@
-// let rockX = 0;
-// let rockY = 0;
-// let rockW = 25;
-// let rockH = 25;
-// let rocks = [];
-// let maxRocks = 20;
-// let rockCnt = 1;
-// let rockScore = 100;
-
-// idea: make the rocks explode into two versions that are half the size and 
-// make the half size rock be destroyed in one hit.
-
 import Component from "../engine/Component.js"
 import Constants from "./Constants.js"
 import {getRandomInt} from "../engine/scripts.js";
@@ -30,7 +18,6 @@ class RockUpdate extends Component{
                 this.parent.markForDelete = true;
                 Constants.rockCnt--;
             }
-            //split rock/asteroid into 2
         }
         else if(this.version == 1){
             rectangle.x -= .15 + (Constants.updateCnt * 0.0005);

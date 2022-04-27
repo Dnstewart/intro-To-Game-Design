@@ -31,7 +31,6 @@ class Constants{
     static projW = 10;
     static projH = 10;
     static projectiles = [];
-    //static maxProj = 100;
     static projCnt = 0;
 
     static starX = 0;

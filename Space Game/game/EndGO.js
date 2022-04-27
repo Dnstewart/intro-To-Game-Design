@@ -12,7 +12,7 @@ class EndGO extends GameObject{
     this.start();
   }
   start(){
-    this.components.push(new Text(this, this.x,this.y,"You Lost, your score was " + Constants.score +".  Click to go back to start.", "25px monospace"))
+    this.components.push(new Text(this, this.x,this.y,"Game Over, your score was " + Constants.score +".  Click to go back to start.", "25px monospace"))
     this.components.push(new TextDraw(this, "cyan", "purple"));
     this.components.push(new EndUpdate(this));
   }

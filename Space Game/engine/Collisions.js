@@ -89,17 +89,6 @@ class Collisions {
         //Now check if we are outside
         if(maxProject < circleMin || minProject > circleMax) return false;
         return true;
-
-
-
-
-
-
-
-
-
-
-
       }
     }
     else if (one instanceof Circle) {

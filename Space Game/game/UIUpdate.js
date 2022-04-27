@@ -1,8 +1,3 @@
-// let timeLen = 0;
-// let timeBool = false;
-// let UIX = 50;
-// let UIY = 50;
-// let txtSize = 25;
 import Component from "../engine/Component.js";
 import Constants from "./Constants.js";
 import Time from "../engine/time.js";

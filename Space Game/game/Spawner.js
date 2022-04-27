@@ -5,8 +5,8 @@ import Constants from "./Constants.js";
 import {getRandomInt} from "../engine/scripts.js";
 import Input from "../engine/Input.js";
 import Collisions from "../engine/Collisions.js";
-//import ProjGO from "./ProjGO.js";
 import EnemyGO from "./EnemyGO.js";
+import BossGO from "./BossGO.js";
 import RockGO from "./RockGO.js";
 import StarsGO from "./StarsGO.js";
 import HealthDropGO from "./HealthDropGO.js";
@@ -47,7 +47,7 @@ class Spawner extends Component {
         }
 
         //heath drop spawns
-        if(Constants.updateCnt % 750 == 0){
+        if(Constants.updateCnt % 500 == 0){
         //if( Math.ceil(Time.timePassed) % 10 == 0){
             let x = getRandomInt(Constants.gameMargins, Constants.cameraDefW + Constants.gameMargins);
             Game.scene().gameObjects.push(new HealthDropGO(x, 0 - 15, 15));
@@ -58,6 +58,12 @@ class Spawner extends Component {
             Game.changeScene(2);
             Constants.tempArray = Game.scene().back;
         }
+
+        if(Constants.updateCnt % 3000 == 0){
+            Game.scene().gameObjects.push(new BossGO((Constants.gameMargins - Constants.cameraDefW) / 2, 0, 100,100));
+        }
+
+        //collisions
         let player = Game.scene().gameObjects[0];
         let healthDrop = Game.findByType("HealthDropGO");
         let enemys = Game.findByType("EnemyGO");
@@ -67,18 +73,28 @@ class Spawner extends Component {
         for(let h of healthDrop) {
             let circle = h.getComponent("Circle");
             let play = player.getComponent("Rectangle");
+            let color = player.getComponent("RectangleDraw");
+            let bool = player.getComponent("PlayerUpdate");
             if(Collisions.inCollision(play, circle)) {
                 Constants.health++;
                 h.markForDelete = true;
+                color.fillStyle = "cyan";
+                bool.bool = true;
+                bool.colorFrames = Constants.updateCnt;
             }
         }
 
         for(let h of enemys) {
             let enemy = h.getComponent("Rectangle");
             let play = player.getComponent("Rectangle");
+            let color = player.getComponent("RectangleDraw");
+            let bool = player.getComponent("PlayerUpdate");
             if(Collisions.inCollision(play, enemy)) {
                 Constants.health--;
                 h.markForDelete = true;
+                color.fillStyle = "orange";
+                bool.bool = true;
+                bool.colorFrames = Constants.updateCnt;
             }
             for(let p of projs){
                 let circle = p.getComponent("Circle");
@@ -94,9 +110,14 @@ class Spawner extends Component {
             let rock = h.getComponent("Rectangle");
             let ver = h.getComponent("RockUpdate").version;
             let play = player.getComponent("Rectangle");
+            let color = player.getComponent("RectangleDraw");
+            let bool = player.getComponent("PlayerUpdate");
             if(Collisions.inCollision(play, rock)) {
                 Constants.health--;
                 h.markForDelete = true;
+                color.fillStyle = "orange";
+                bool.bool = true;
+                bool.colorFrames = Constants.updateCnt;
             }
             
             
@@ -132,9 +153,14 @@ class Spawner extends Component {
         for(let h of enmProjs) {
             let circle = h.getComponent("Circle");
             let play = player.getComponent("Rectangle");
+            let color = player.getComponent("RectangleDraw");
+            let bool = player.getComponent("PlayerUpdate");
             if(Collisions.inCollision(play, circle)) {
                 Constants.health--;
                 h.markForDelete = true;
+                color.fillStyle = "orange";
+                bool.bool = true;
+                bool.colorFrames = Constants.updateCnt;
             }
             for(let p of projs){
                 let circle2 = p.getComponent("Circle");

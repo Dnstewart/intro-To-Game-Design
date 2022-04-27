@@ -20,9 +20,23 @@ Input.attach(document);
 class PlayerUpdate extends Component{
     constructor(parent){
         super(parent);
+        this.bool = false;
+        this.colorFrames = 0;
     }
     update() {
         let rectangle = this.parent.getComponent("Rectangle");
+        let color = this.parent.getComponent("RectangleDraw");
+
+        if(this.bool){
+            console.log(Constants.updateCnt);
+            if(Constants.updateCnt > this.colorFrames + 5){
+                console.log("hi");
+                color.fillStyle = "blue";
+                this.bool = false
+            }
+            
+        }
+
         if (Input.mousePressed){
             Game.scene().gameObjects.push(new ProjGO(rectangle.x + 20, rectangle.y + 10, 5));
             console.log("pew"); //same but fun
@@ -52,16 +66,7 @@ class PlayerUpdate extends Component{
 
         if(Constants.health < 1){
             this.parent.markForDelete = true;
-        }
-
-        
-    // if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
-    //     Constants.starCnt != Constants.maxstars){
-    //     let x = getRandomInt(Constants.starX, window.innerWidth);
-    //     Game.scene().back.push(new StarsGO(x, Constants.starY, 2, getRandomInt(0, 255),255, 255));
-    //     Constants.starCnt++;
-    // }
-        
+        }   
     }
 }
 export default PlayerUpdate;

@@ -13,7 +13,7 @@ class StartScene extends Scene {
     super("Start Game Scene");
   }
   start(){
-   this.foreGround.push(new StartGameObject(window.innerWidth * .2, window.innerHeight *.5));
+   this.foreGround.push(new StartGameObject(window.innerWidth * .25, window.innerHeight *.5));
    this.gameObjects.push(new PrefabEmpty("Spawner").addComponent(new StartSpawner()));
   }
 }

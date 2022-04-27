@@ -5,7 +5,6 @@ import Constants from "./Constants.js";
 import {getRandomInt} from "../engine/scripts.js";
 import Input from "../engine/Input.js";
 import Collisions from "../engine/Collisions.js";
-//import ProjGO from "./ProjGO.js";
 import EnemyGO from "./EnemyGO.js";
 import RockGO from "./RockGO.js";
 import StarsGO from "./StarsGO.js";
