@@ -18,6 +18,8 @@ class Spawner extends Component {
         super(parent);
     }
     update() {
+
+
         // Star spawns
         if( Math.floor(Time.timePassed * 100) % 1 == 0 && 
             Constants.starCnt != Constants.maxstars){
@@ -45,7 +47,7 @@ class Spawner extends Component {
         }
 
         //heath drop spawns
-        if(Constants.updateCnt % 200 == 0){
+        if(Constants.updateCnt % 750 == 0){
         //if( Math.ceil(Time.timePassed) % 10 == 0){
             let x = getRandomInt(Constants.gameMargins, Constants.cameraDefW + Constants.gameMargins);
             Game.scene().gameObjects.push(new HealthDropGO(x, 0 - 15, 15));
@@ -97,7 +99,7 @@ class Spawner extends Component {
                 h.markForDelete = true;
             }
             
-            /*
+            
             for(let p of projs){
                 let circle = p.getComponent("Circle");
                 if(Collisions.inCollision(circle, rock)) {
@@ -112,10 +114,21 @@ class Spawner extends Component {
                         Constants.score += 50;
                     }
                 }
-            }*/
+            }
+            
+            for(let p of enmProjs){
+                let circle = p.getComponent("Circle");
+                if(Collisions.inCollision(circle, rock)) {
+                    p.markForDelete = true;
+                    h.markForDelete = true;
+                    if(ver == 2){
+                        Game.scene().gameObjects.push(new RockGO(rock.x, rock.y, rock.w / 2, rock.h / 2, 1));
+                        Game.scene().gameObjects.push(new RockGO(rock.x, rock.y, rock.w / 2, rock.h / 2, 0));
+                    }
+                }
+            }
         }
 
-        /*
         for(let h of enmProjs) {
             let circle = h.getComponent("Circle");
             let play = player.getComponent("Rectangle");
@@ -123,8 +136,16 @@ class Spawner extends Component {
                 Constants.health--;
                 h.markForDelete = true;
             }
+            for(let p of projs){
+                let circle2 = p.getComponent("Circle");
+                if(Collisions.inCollision(circle, circle2)) {
+                    p.markForDelete = true;
+                    h.markForDelete = true;
+                    Constants.score += 10;
+                }
+            }
         }
-        */
+        
 
         Constants.updateCnt++;
     }

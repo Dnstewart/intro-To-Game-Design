@@ -28,7 +28,6 @@ class Collisions {
       }
       //AAR/AAR
       if (two instanceof Rectangle) {
-        console.log("hi from coll rect");
         let outside = one.x > two.x + two.w || //Two is left of one
           one.x + one.w < two.x || //Two is right of one
           one.y > two.y + two.h || //Two is below one

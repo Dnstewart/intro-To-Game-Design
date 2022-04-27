@@ -25,7 +25,6 @@ class PlayerUpdate extends Component{
         let rectangle = this.parent.getComponent("Rectangle");
         if (Input.mousePressed){
             Game.scene().gameObjects.push(new ProjGO(rectangle.x + 20, rectangle.y + 10, 5));
-            Constants.projCnt++; // maybe not needed
             console.log("pew"); //same but fun
             Input.mousePressed = false;
         }

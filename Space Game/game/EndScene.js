@@ -13,16 +13,26 @@ class EndScene extends Scene {
     this.foreGround.push(new EndGO(window.innerWidth * .2, window.innerHeight *.5));
 
     // DB connection
-    /*
-    let mysql = require('mysql');
+    /* doesnt work 
+    let mysql = require('mysql');//SpaceGameDB?useSSL=false",
     let con = mysql.createConnection({
-      host: "jdbc:mysql://ec2-54-91-176-67.compute-1.amazonaws.com:3306/SpaceGameDB?useSSL=false",
+      host: "ec2-54-91-176-67.compute-1.amazonaws.com",
       user: "dnstewartremote",
-      password: "Chevrolet1!"
+      password: "Chevrolet1!",
+      database: "SpaceGameDB"
     });
     con.connect(function(err) {
       if (err) throw err;
       console.log("Connected!");
+      let sql = "INSERT INTO score (SCORE) VALUES ('" + Constants.score + "')";
+      con.query(sql, function (err, result) {
+        if (err) throw err;
+        console.log(result);
+      });
+      con.query("SELECT * FROM score", function (err, result, fields) {
+        if (err) throw err;
+        console.log(result);
+      });
     });*/
 
 

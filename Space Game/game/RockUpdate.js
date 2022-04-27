@@ -25,7 +25,7 @@ class RockUpdate extends Component{
     update() {
         let rectangle = this.parent.getComponent("Rectangle");
         if(this.version == 2){
-            rectangle.y += .75;
+            rectangle.y += .75 + (Constants.updateCnt * 0.0005);
             if(rectangle.y > window.innerHeight){
                 this.parent.markForDelete = true;
                 Constants.rockCnt--;
@@ -33,45 +33,20 @@ class RockUpdate extends Component{
             //split rock/asteroid into 2
         }
         else if(this.version == 1){
-            rectangle.x -= .15;
-            rectangle.y += 2;
+            rectangle.x -= .15 + (Constants.updateCnt * 0.0005);
+            rectangle.y += 2 + (Constants.updateCnt * 0.0005);
             if(rectangle.y > window.innerHeight || rectangle.x < 0 - rectangle.w - 1){
                 this.parent.markForDelete = true;
                 Constants.rockCnt--;
             }
         }
         else{
-            rectangle.x += .15;
-            rectangle.y += 2;
+            rectangle.x += .15 + (Constants.updateCnt * 0.0005);
+            rectangle.y += 2 + (Constants.updateCnt * 0.0005);
             if(rectangle.y > window.innerHeight || rectangle.x > window.innerWidth + 1){
                 this.parent.markForDelete = true;
                 Constants.rockCnt--;
             }
-        }
-
-        
-        let proj = Game.findByType("ProjGO");
-        let i = 0;
-        for (let p of proj){
-            let circle = p.getComponent("Circle");
-            let w = rectangle.w + circle.r;
-            let h = rectangle.h + circle.r;
-            let x = rectangle.x - circle.r;
-            let y = rectangle.y - circle.r;
-            if(circle.x > x && circle.y > y && circle.x < x + w && circle.y < y + h){
-                this.parent.markForDelete = true;
-                proj[i].markForDelete = true;//undefined
-                if(this.version == 2){
-                    Constants.score += 100;
-                    Game.scene().gameObjects.push(new RockGO(rectangle.x, rectangle.y, rectangle.w / 2, rectangle.h / 2, 1));
-                    Game.scene().gameObjects.push(new RockGO(rectangle.x, rectangle.y, rectangle.w / 2, rectangle.h / 2, 0));
-                }
-                else{
-                    Constants.score += 50;
-                }
-                break;
-            }
-            i++;
         }
 
     }

@@ -11,7 +11,7 @@ import Constants from "./Constants.js";
 import Time from "../engine/time.js";
 import Input from "../engine/input.js";
 
-class ProjUpdate extends Component{
+class EnemyProjUpdate extends Component{
     constructor(parent){
         super(parent);
         this.bool = true;
@@ -19,26 +19,14 @@ class ProjUpdate extends Component{
     update() {
         let circle = this.parent.getComponent("Circle");
         if(this.bool){
-            circle.y -= 10;
-            if (circle.y + 5 < 0) {
+            circle.y += 5 + (Constants.updateCnt * 0.0005);
+            if (circle.y - 5 > window.innerHeight) {
                 this.bool = false;
             }
         }
         else {
             this.parent.markForDelete = true;
         }
-
-        //collision
-
-        // let j = 0;
-        // for (let enemy of Constants.enemys){
-        //     if ((this.x >= enemy.x) && (this.x + Constants.projW <= enemy.x + Constants.enemyW) && (this.y <= enemy.y + enemyH)){
-        //         //Constants.enemys.splice(j,1);
-        //         //Constants.projectiles.splice(j,1);
-        //         Constants.score += Constants.enemyScore;
-        //     }
-        //     j++;
-        // }
     }
 }
-export default ProjUpdate;
+export default EnemyProjUpdate;
